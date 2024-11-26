@@ -1,27 +1,18 @@
-#!/bin/sh
+#!/bin/bash
 
-mkdir vhdiso_tmp
-
-cp -a vhdiso vhdiso_tmp
-
-cd ./vhdiso_tmp
+cd vhdiso
 
 option='-d -R -U -max-iso9660-filenames -D'
 
 size=$(stat -c '%s' ./boot/etfsboot.com)
-if [ $size -eq 4096 ]; then
-    loadsize=8
+if [[ "$size" -eq "4096" ]]; then
+    loadsize="8"
 else
-    loadsize=4
+    loadsize="4"
 fi
 
+ln ../efi/microsoft/boot/bcd boot/bcd
 
-cd ./boot
-ln ../efi/microsoft/boot/bcd bcd
-
-cd ..
 mkisofs $option -no-emul-boot -boot-load-size $loadsize -b boot/etfsboot.com  -eltorito-alt-boot -no-emul-boot -e  efi.img  -o ../ventoy_vhdboot.img ./ 
 
-cd ..
-
-rm -rf vhdiso_tmp
+ls

@@ -17,10 +17,10 @@ jobs:
     - uses: actions/checkout@v4
     - name: ExecShell
       run : |
-          apt-get install mkisofs
+          sudo apt-get install mkisofs
+          tree
           chmod +x mkvhdboot.sh
           ./mkvhdboot.sh
-          ls
         
     - uses: actions/upload-artifact@v4
       with: 
